@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public static GameManager i { get { return _i; } }
     [SerializeField] private Transform sysMessagePoint;
     [SerializeField] private Transform spawnPoint;
-    private Map map;
     private bool isPaused;
 
 
@@ -25,20 +24,15 @@ public class GameManager : MonoBehaviour
 
     private void Initialize() 
     {
-        CreateMap();
+
     }
 
-    private void CreateMap()
-    {
-        map = new Map();
-    }
     #endregion
 
     public void PauseGame(){if(isPaused) return; else isPaused = true;}
     public void UnPauseGame(){if(isPaused) isPaused = false; else return;}
     
     public Transform GetSysMessagePoint(){ return sysMessagePoint;}
-    public Map GetMap() { return map; }
     public bool GetIsPaused() { return isPaused; }
 
 }
