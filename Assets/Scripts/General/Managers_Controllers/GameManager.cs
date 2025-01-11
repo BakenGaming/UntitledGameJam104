@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager i { get { return _i; } }
     [SerializeField] private Transform sysMessagePoint;
     [SerializeField] private Transform spawnPoint;
-    private GameObject playerGO;
+    private Map map;
     private bool isPaused;
 
 
@@ -20,33 +20,17 @@ public class GameManager : MonoBehaviour
     private void Awake() 
     {
         _i = this;  
-        SetupObjectPools();  
         Initialize();
     }
 
     private void Initialize() 
     {
-        SpawnPlayerObject();
+        CreateMap();
     }
 
-    private void SpawnPlayerObject()
+    private void CreateMap()
     {
-        playerGO = Instantiate(GameAssets.i.pfPlayerObject, spawnPoint);
-        playerGO.transform.parent = null;
-        playerGO.GetComponent<IHandler>().Initialize();
-    }
-
-    public void SetupObjectPools()
-    {
-        //Do the below for all objects that will need pooled for use
-        //ObjectPooler.SetupPool(OBJECT, SIZE, "NAME") == Object is pulled from GameAssets, Setup object with a SO that contains size and name
-        
-        //The below is placed in location where object is needed from pool
-        //==============================
-        //PREFAB_SCRIPT instance = ObjectPooler.DequeueObject<PREFAB_SCRIPT>("NAME");
-        //instance.gameobject.SetActive(true);
-        //instance.Initialize();
-        //==============================
+        map = new Map();
     }
     #endregion
 
@@ -54,7 +38,7 @@ public class GameManager : MonoBehaviour
     public void UnPauseGame(){if(isPaused) isPaused = false; else return;}
     
     public Transform GetSysMessagePoint(){ return sysMessagePoint;}
-    public GameObject GetPlayerGO() { return playerGO; }
+    public Map GetMap() { return map; }
     public bool GetIsPaused() { return isPaused; }
 
 }
