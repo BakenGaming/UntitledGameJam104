@@ -25,7 +25,10 @@ public class GameAssets : MonoBehaviour
     public Transform pfSysMessage;
     public Transform pfDamagePopup;
     public Transform pfTextPopup;
-    public GameObject pfPlayerObject;
+    public GameObject pfbaseGO;
+    public GameObject pfPlayerProjectile;
+    public GameObject pfEnemyProjectile;
+    public GameObject pfEnemy;
   
     public SoundAudioClip[] audioClipArray;
     public MusicAudioClip[] musicTrackArray;

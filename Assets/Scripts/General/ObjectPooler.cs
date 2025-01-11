@@ -30,17 +30,20 @@ public class ObjectPooler
         T newInstance = Object.Instantiate(item);
         newInstance.gameObject.SetActive(false);
         newInstance.transform.position = Vector3.zero;
+        newInstance.gameObject.transform.parent = GameManager.i.GetPoolLocation(key);
         poolDictionary[key].Enqueue(newInstance);
         return newInstance;
     }
     public static void SetupPool<T>(T pooledItemPrefab, int poolSize, string dictionaryEntry) where T : Component
     {
         poolDictionary.Add(dictionaryEntry, new Queue<Component>());
+        poolLookup.Add(dictionaryEntry, pooledItemPrefab);
 
         for (int i = 0; i < poolSize; i++)
         {
             T pooledInstance = Object.Instantiate(pooledItemPrefab);
             pooledInstance.gameObject.SetActive(false);
+            pooledInstance.gameObject.transform.parent = GameManager.i.GetPoolLocation(dictionaryEntry);
             poolDictionary[dictionaryEntry].Enqueue((T)pooledInstance);
         }
     }

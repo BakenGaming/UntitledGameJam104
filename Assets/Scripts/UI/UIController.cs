@@ -10,25 +10,35 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject creditsScreen;
+    [SerializeField] private TextMeshProUGUI curencyCounter;
+    [SerializeField] private Image dayNightCycleImage;
     [SerializeField] private bool isMainMenu;
 
     private void OnEnable() 
     {
         if (isMainMenu) Initialize();
+        GameManager.OnBaseSpawned += Initialize;
     }
     private void OnDisable() 
     {
-
+        BaseHandler.OnCurrencyAmountChanged -= UpdateCurrency;
+        DayNightSystem.OnDayNightIncremented -= UpdateDayNightCycle;
     }
     private void Initialize()
     {
-        GetComponent<VolumeSettings>().Initialize();        
-        if(!isMainMenu) pauseMenu.SetActive(false);
+        //GetComponent<VolumeSettings>().Initialize();        
+        if(!isMainMenu) 
+        {
+            pauseMenu.SetActive(false);
+            UpdateCurrency();
+        }
         else creditsScreen.SetActive(false);
         
         settingsMenu.SetActive(false);
+        BaseHandler.OnCurrencyAmountChanged += UpdateCurrency;
+        DayNightSystem.OnDayNightIncremented += UpdateDayNightCycle;
     }
-
+    #region Menus
     private void OpenPauseMenu()
     {
         pauseMenu.SetActive(true);
@@ -61,7 +71,8 @@ public class UIController : MonoBehaviour
     {
         creditsScreen.SetActive(false);
     }
-
+    #endregion
+    #region Scene Management
     public void StartGame()
     {
         SceneController.StartGame();
@@ -80,5 +91,16 @@ public class UIController : MonoBehaviour
     {
         SceneController.ExitGame();
     }
+    #endregion
+    #region GameUI Functions
+    private void UpdateCurrency()
+    {
+        curencyCounter.text = GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetCurrencySystem().GetCurrentCurrency().ToString();
+    }
 
+    private void UpdateDayNightCycle()
+    {
+        dayNightCycleImage.fillAmount = DayNightSystem.i.GetCurrentFillAmount();
+    }
+    #endregion
 }
