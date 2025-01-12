@@ -10,11 +10,12 @@ public class DayNightSystem : MonoBehaviour
     public static event Action<bool> OnCycleComplete;
     public static event Action OnCycleChange;
     public static event Action OnNightStarted;
+    public static event Action OnDayStarted;
     private static DayNightSystem _i;
     public static DayNightSystem i { get { return _i; } }
     private float currentFillAmount;
-    private float dayNightIncrement=.3f;
-    private bool cycleActive = false, isDaytime = true;
+    private float dayIncrement=.1f, nightIncrement=.3f;
+    private bool cycleActive = false, isDaytime = true, firstDay = true;
 
     private void Awake() 
     {
@@ -23,8 +24,7 @@ public class DayNightSystem : MonoBehaviour
 
     public void Initialize()
     {
-        currentFillAmount = 0;
-        cycleActive = true;
+        InitializeDay();
     }
 
     public void InitializeDay()
@@ -33,6 +33,9 @@ public class DayNightSystem : MonoBehaviour
         cycleActive = true;
         isDaytime = true;
         OnCycleChange?.Invoke();
+        OnDayStarted?.Invoke();
+        if(!firstDay) nightIncrement -= Mathf.Clamp(nightIncrement * .1f, .05f, 1);
+        firstDay = false;
     }
 
     public void InitializeNight()
@@ -46,7 +49,8 @@ public class DayNightSystem : MonoBehaviour
 
     private void LateUpdate() 
     {
-        if(cycleActive) currentFillAmount += dayNightIncrement * Time.deltaTime;
+        if(cycleActive && isDaytime) currentFillAmount += dayIncrement * Time.deltaTime;
+        else currentFillAmount += nightIncrement * Time.deltaTime;
         if(currentFillAmount >= 1) 
         {
             OnCycleComplete?.Invoke(isDaytime); 

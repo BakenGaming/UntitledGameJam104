@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         baseGO = Instantiate(GameAssets.i.pfbaseGO, spawnPoint.position, Quaternion.identity);
         baseGO.GetComponent<BaseHandler>().InitializePlayer(); 
         OnBaseSpawned?.Invoke(); 
+        UIController.i.Initialize();
         EnemySpawner.OnAllEnemiesRemoved += StartDayCycle;
         DayNightSystem.i.Initialize();
     }

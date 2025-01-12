@@ -10,10 +10,14 @@ public class PlayerProjectile : MonoBehaviour
     private SpriteRenderer projectileSR;
     private GameObject target;
     private IHandler handler;
+    private bool isDecaying;
+    private float decayTimer=1f;
+    private Vector3 moveDir;
     public void InitializeProjectile(GameObject _target, IHandler _handler)
     {
         target = _target;
         handler = _handler;
+        moveDir = (target.transform.position - transform.position).normalized;
         projectileSO = _handler.GetStats().GetProjectileSO();
         projectileSR = GetComponent<SpriteRenderer>();
         projectileSR.sprite = projectileSO.projectileSprite;
@@ -27,15 +31,17 @@ public class PlayerProjectile : MonoBehaviour
 
     private void Update() 
     {
-        if(target == null || target.gameObject.activeInHierarchy == false) { ObjectPooler.EnqueueObject(this, "Player Projectile"); return;}
+        if(target == null || target.gameObject.activeInHierarchy == false) { isDecaying = true;}
 
-        Vector3 moveDir = (target.transform.position - transform.position).normalized;
 
         float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
 
         transform.eulerAngles = new Vector3(0, 0, angle - 90f);
         
         transform.position += moveDir * handler.GetStats().GetProjectileSpeed() * Time.deltaTime;
+        if(isDecaying) decayTimer -= Time.deltaTime;
+
+        if(decayTimer <= 0) {ObjectPooler.EnqueueObject(this, "Player Projectile"); return;}
     }
 
     private void OnTriggerEnter2D(Collider2D trigger) 

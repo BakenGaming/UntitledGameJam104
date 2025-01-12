@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class BaseHandler : MonoBehaviour, IHandler
 {
@@ -37,6 +38,7 @@ public class BaseHandler : MonoBehaviour, IHandler
     private void OnDisable() 
     {
         EnemyHandler.OnGatherDust -= IncreaseCurrency;
+        EnemyHandler.OnEnemyDeath -= ResetAttackCooldown;
     }
     private void Awake()
     {
@@ -53,19 +55,25 @@ public class BaseHandler : MonoBehaviour, IHandler
 
         UpdateHealth();
         GetComponent<DamageHandler>().InitializeDamage(false);
-        GetComponent<PlayerAttack>().InitializeAttack(this);
+        GetComponentInChildren<PlayerAttack>().InitializeAttack(this);
         EnemyHandler.OnGatherDust += IncreaseCurrency;
+        EnemyHandler.OnEnemyDeath += ResetAttackCooldown;
+        UIController.OnBonusHealthUpdated += IncreaseHealth;
     }
 
     #region Loop
     private void Update() 
     {
+        if(DayNightSystem.i.GetIsDayTime()) return;
+
         UpdateTimers();
     }
 
     private void LateUpdate() 
     {
+        if(DayNightSystem.i.GetIsDayTime()) return;
         FindTarget();
+
     }
     private void UpdateTimers()
     {
@@ -115,10 +123,18 @@ public class BaseHandler : MonoBehaviour, IHandler
         OnCurrencyAmountChanged?.Invoke();
     }
 
+    private void ResetAttackCooldown(EnemyHandler _notUsed){attackCD = 0;}
+
     #region Ihandler Functions
     public void HandleDeath()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void IncreaseHealth()
+    {
+        healthSystem.IncreaseMaxHealth(statSystem.GetPlayerHealth());
+        UpdateHealth();
     }
 
     public void UpdateHealth()

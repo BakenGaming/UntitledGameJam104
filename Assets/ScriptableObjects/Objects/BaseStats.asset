@@ -16,5 +16,5 @@ MonoBehaviour:
   attackDamage: 50
   projectileSpeed: 15
   projectileLifetime: 3
-  fireRate: 0.5
+  fireRate: 1
   projectileSO: {fileID: 11400000, guid: 3d65c5c39beb67f4a81b3bec3cdf111e, type: 2}

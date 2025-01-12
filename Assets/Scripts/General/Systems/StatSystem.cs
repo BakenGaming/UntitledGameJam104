@@ -15,6 +15,8 @@ public class StatSystem
     private int runeDustValue;
     private ProjectileSO projectileSO;
     private Brain[] brains;
+    private int bonusHealth, bonusDamage;
+    private float bonusAttackSpeed;
 
     public StatSystem(PlayerStatsSO _stats)
     {
@@ -41,12 +43,25 @@ public class StatSystem
         brains = _stats.enemyBrains;
     }
 
-    public int GetPlayerHealth (){return health;}
-    public int GetAttackDamage(){return attackDamage;}
+    public void UpdateBonusHealth(int _amount)
+    {
+        bonusHealth += _amount;
+    }
+    public void UpdateBonusAttackDamage(int _amount)
+    {
+        bonusDamage += _amount;
+    }
+    public void UpdateBonusFireRate(float _amount)
+    {
+        bonusAttackSpeed = Mathf.Clamp(bonusAttackSpeed - _amount, -.2f, 1);
+    }
+
+    public int GetPlayerHealth (){return health + bonusHealth;}
+    public int GetAttackDamage(){return attackDamage + bonusDamage;}
     public float GetMoveSpeed(){return moveSpeed;}
     public int GetNumberOfBullets(){return numberOfBullets;}
     public float GetProjectileSpeed(){return projectileSpeed;}
-    public float GetFireRate(){return fireRate;}
+    public float GetFireRate(){return fireRate + bonusAttackSpeed;}
     public float GetProjectileLifetime(){return projectileLifetime;}
     public ProjectileSO GetProjectileSO(){return projectileSO;}
     public int GetRuneDustValue(){return runeDustValue;}

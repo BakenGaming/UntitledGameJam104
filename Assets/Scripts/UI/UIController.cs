@@ -4,36 +4,51 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Rendering;
 
 public class UIController : MonoBehaviour
 {
+    public static event Action OnBonusHealthUpdated;
+    private static UIController _i;
+    public static UIController i { get { return _i; } }
+    [Header("Menus")]
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject creditsScreen;
+    [SerializeField] private GameObject empowerMenu;
+    [Header("Text Fields")]
     [SerializeField] private TextMeshProUGUI curencyCounter;
+    [SerializeField] private TextMeshProUGUI healthStat, damageStat, fireRateStat;
+    [Header("Images")]
     [SerializeField] private Image dayNightCycleImage;
     [SerializeField] private Sprite daySprite, nightSprite;
     [SerializeField] private Image fillImage;
     [SerializeField] private bool isMainMenu;
 
+    private void Awake() 
+    {
+        _i = this;    
+    }
     private void OnEnable() 
     {
         if (isMainMenu) Initialize();
-        GameManager.OnBaseSpawned += Initialize;
     }
     private void OnDisable() 
     {
         BaseHandler.OnCurrencyAmountChanged -= UpdateCurrency;
         DayNightSystem.OnDayNightIncremented -= UpdateDayNightCycle;
         DayNightSystem.OnCycleChange -= UpdateCycleImage;
+        DayNightSystem.OnNightStarted -= CloseEmpowerMenu;
+        DayNightSystem.OnDayStarted -= OpenEmpowerMenu;
     }
-    private void Initialize()
+    public void Initialize()
     {
         //GetComponent<VolumeSettings>().Initialize();        
         if(!isMainMenu) 
         {
             pauseMenu.SetActive(false);
             UpdateCurrency();
+            UpdateStats();
         }
         else creditsScreen.SetActive(false);
         
@@ -41,6 +56,8 @@ public class UIController : MonoBehaviour
         BaseHandler.OnCurrencyAmountChanged += UpdateCurrency;
         DayNightSystem.OnDayNightIncremented += UpdateDayNightCycle;
         DayNightSystem.OnCycleChange += UpdateCycleImage;
+        DayNightSystem.OnDayStarted += OpenEmpowerMenu;
+        DayNightSystem.OnNightStarted += CloseEmpowerMenu;
     }
     #region Menus
     private void OpenPauseMenu()
@@ -75,6 +92,19 @@ public class UIController : MonoBehaviour
     {
         creditsScreen.SetActive(false);
     }
+
+    private void OpenEmpowerMenu()
+    {
+        empowerMenu.SetActive(true);
+        UpdateStats();
+    }
+
+    public void CloseEmpowerMenu()
+    {
+        empowerMenu.SetActive(false);
+        if(DayNightSystem.i.GetIsDayTime()) DayNightSystem.i.InitializeNight();
+    }
+
     #endregion
     #region Scene Management
     public void StartGame()
@@ -102,6 +132,13 @@ public class UIController : MonoBehaviour
         curencyCounter.text = GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetCurrencySystem().GetCurrentCurrency().ToString();
     }
 
+    private void UpdateStats()
+    {
+        healthStat.text = GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetStats().GetPlayerHealth().ToString();
+        damageStat.text = GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetStats().GetAttackDamage().ToString();
+        fireRateStat.text = GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetStats().GetFireRate().ToString();
+    }
+
     private void UpdateDayNightCycle()
     {
         fillImage.fillAmount = DayNightSystem.i.GetCurrentFillAmount();
@@ -119,6 +156,25 @@ public class UIController : MonoBehaviour
             fillImage.sprite = nightSprite;
             dayNightCycleImage.sprite = nightSprite;
         }
+    }
+
+    public void UpdateHealth()
+    {
+        GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetStats().UpdateBonusHealth(10);
+        OnBonusHealthUpdated?.Invoke();
+        UpdateStats();
+    }
+
+    public void UpdateDamage()
+    {
+        GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetStats().UpdateBonusAttackDamage(10);
+        UpdateStats();
+    }
+
+    public void UpdateAttackSpeed()
+    {
+        GameManager.i.GetBaseGO().GetComponent<BaseHandler>().GetStats().UpdateBonusFireRate(.05f);
+        UpdateStats();
     }
     #endregion
 }
