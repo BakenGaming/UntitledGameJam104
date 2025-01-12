@@ -118,7 +118,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -139,7 +139,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -160,7 +160,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RuneBase_D
+      name: RuneDust
       rect:
         serializedVersion: 2
         x: 384
@@ -181,7 +181,7 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,15 +194,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_A
+      name: Rune_Health
       rect:
         serializedVersion: 2
-        x: 537
-        y: 989
+        x: 545
+        y: 980
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,15 +215,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_B
+      name: Rune_Attack
       rect:
         serializedVersion: 2
-        x: 675
-        y: 990
+        x: 668
+        y: 988
         width: 64
-        height: 64
+        height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,15 +236,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_C
+      name: Rune_Speed
       rect:
         serializedVersion: 2
-        x: 789
-        y: 991
+        x: 793
+        y: 989
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,13 +257,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_D
+      name: Moon
       rect:
         serializedVersion: 2
-        x: 925
-        y: 992
-        width: 64
-        height: 64
+        x: 663
+        y: 725
+        width: 226
+        height: 226
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,20 +271,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fec03f18d808da44ca8e2a42a4ffa133
-      internalID: 235564024
+      spriteID: 0a94f6bb98ca24a40909548f444511e1
+      internalID: 152674565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_E
+      name: Sun
       rect:
         serializedVersion: 2
-        x: 1052
-        y: 993
-        width: 64
-        height: 64
+        x: 911
+        y: 708
+        width: 226
+        height: 226
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,41 +292,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb16fc6666c27b641896e16ed1e9b70c
-      internalID: -952824880
+      spriteID: 70a6590c151fc2249ad2d50238f90a2b
+      internalID: -871523156
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_F
+      name: Cannon
       rect:
         serializedVersion: 2
-        x: 1185
-        y: 995
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 495
+        y: 665
+        width: 73
+        height: 131
+      alignment: 9
+      pivot: {x: 0.49555865, y: 0.26635787}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ad2bdd2e7381e141bc55ea5f6032e2b
-      internalID: -1568073234
+      spriteID: 3bcd0e77a335c6b4ba87ab750edb5855
+      internalID: -1092343398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rune_G
+      name: Base
       rect:
         serializedVersion: 2
-        x: 1309
-        y: 994
-        width: 64
-        height: 64
+        x: 69
+        y: 504
+        width: 376
+        height: 378
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -334,50 +334,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9530dec49a8433a4187b53a506c4838d
-      internalID: -71443719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rune_H
-      rect:
-        serializedVersion: 2
-        x: 1439
-        y: 996
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 927c0534493028f44a1480ce8eca951a
-      internalID: 1758164605
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rune_I
-      rect:
-        serializedVersion: 2
-        x: 1564
-        y: 996
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac6423ee5dc23e54d8d265cfde7b93db
-      internalID: 974541443
+      spriteID: 0e3fca3b066d89d4f9faf97ef531a102
+      internalID: -16881972
       vertices: []
       indices: 
       edges: []
@@ -393,20 +351,23 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Base: -16881972
+      Cannon: -1092343398
       JamArt_13: -444416037
+      Moon: 152674565
       RuneBase_A: -181944433
       RuneBase_B: -379482332
       RuneBase_C: -1025599552
-      RuneBase_D: -74540605
-      Rune_A: 1427130082
-      Rune_B: -553230220
-      Rune_C: 141380266
+      RuneDust: -74540605
+      Rune_Attack: -553230220
       Rune_D: 235564024
       Rune_E: -952824880
       Rune_F: -1568073234
       Rune_G: -71443719
-      Rune_H: 1758164605
+      Rune_Health: 1427130082
       Rune_I: 974541443
+      Rune_Speed: 141380266
+      Sun: -871523156
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

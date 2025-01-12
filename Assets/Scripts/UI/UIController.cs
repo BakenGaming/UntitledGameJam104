@@ -12,6 +12,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject creditsScreen;
     [SerializeField] private TextMeshProUGUI curencyCounter;
     [SerializeField] private Image dayNightCycleImage;
+    [SerializeField] private Sprite daySprite, nightSprite;
+    [SerializeField] private Image fillImage;
     [SerializeField] private bool isMainMenu;
 
     private void OnEnable() 
@@ -23,6 +25,7 @@ public class UIController : MonoBehaviour
     {
         BaseHandler.OnCurrencyAmountChanged -= UpdateCurrency;
         DayNightSystem.OnDayNightIncremented -= UpdateDayNightCycle;
+        DayNightSystem.OnCycleChange -= UpdateCycleImage;
     }
     private void Initialize()
     {
@@ -37,6 +40,7 @@ public class UIController : MonoBehaviour
         settingsMenu.SetActive(false);
         BaseHandler.OnCurrencyAmountChanged += UpdateCurrency;
         DayNightSystem.OnDayNightIncremented += UpdateDayNightCycle;
+        DayNightSystem.OnCycleChange += UpdateCycleImage;
     }
     #region Menus
     private void OpenPauseMenu()
@@ -100,7 +104,21 @@ public class UIController : MonoBehaviour
 
     private void UpdateDayNightCycle()
     {
-        dayNightCycleImage.fillAmount = DayNightSystem.i.GetCurrentFillAmount();
+        fillImage.fillAmount = DayNightSystem.i.GetCurrentFillAmount();
+    }
+
+    private void UpdateCycleImage()
+    {
+        if(DayNightSystem.i.GetIsDayTime()) 
+        {
+            fillImage.sprite = daySprite;
+            dayNightCycleImage.sprite = daySprite;
+        }
+        else 
+        {
+            fillImage.sprite = nightSprite;
+            dayNightCycleImage.sprite = nightSprite;
+        }
     }
     #endregion
 }
